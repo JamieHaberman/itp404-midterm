@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Question 4</title>
+</head>
+<body>
+
+<script src="jquery-3.1.1.js"></script>
+
+<script>
+function CommentList(){
+
+}
+CommentList.prototype.fetch = function(){
+var promise = $.ajax({
+   url: 'http://itp-api.herokuapp.com/api/comments'
+}).then(function(json){
+ var commentsarray = json.data;
+ var plainarray = commentsarray.map(function(comment){
+  return {
+   id: comment.id,
+   body: comment.attributes.body
+  }
+ });
+ return plainarray;
+});
+ return promise;
+}; 
+ 
+  var commentList = new CommentList();
+  commentList.fetch().then(function(comments) {
+    console.log(comments);
+    // comments should look like [ { id: 1, body: 'First!' }, ... ]
+  });
+</script>
+
+</body>
+</html>
